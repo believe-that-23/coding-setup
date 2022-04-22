@@ -1,25 +1,28 @@
-colorscheme monokai
+colorscheme molokai
+syntax enable
 let g:rehash256 = 1
 :imap jj <Esc>
 
-"set exrc
+"set background=light
+"colorscheme solarized
+
+"st exrc
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 set splitbelow
-
 
 noremap <TAB> %
 noremap <C-f> :FZF<CR>
 :tnoremap <Esc> <C-\><C-n>
 :vmap // :s:^://<CR>
 map <C-u> :s/^\/\///<Enter>
+:set mouse=a
 
 
 call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
 Plug 'scrooloose/syntastic'
 Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'junegunn/fzf'
@@ -30,9 +33,9 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_loc_list_height = 5
 
@@ -59,7 +62,8 @@ noremap <Leader>s :source ~/.vimrc <CR>
 noremap <Leader>e :x!<CR>
 noremap <Leader>n :tabedit
 noremap <Leader>g gt
-noremap <Leader>c "+y
+vmap <Leader>c y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe <CR><CR>
+map <Leader>v :r ~/.vimbuffer<CR>
 noremap <Leader>hs :split
 noremap <Leader>vs :vsplit
 noremap <Leader>h :wincmd h<CR>
@@ -71,8 +75,7 @@ nnoremap <silent> <Leader>- :vertical resize -5<CR>
 nnoremap <silent> <Leader>+ :res +5<CR>
 nnoremap <silent> <Leader>_ :res -5<CR>
 
-map <F5> :w<CR> :!clear<CR> :!g++ --std=c++17 % -o %:r<CR>
-map <F9> :w<CR> :!clear<CR> :!g++ --std=c++17 % -o %:r && ./%:r<CR>
+map <F9> :w<CR> :!clear<CR> :!g++ -fsanitize=address -std=c++17 -Wall -Wextra -Wshadow -DONPC -O2 -o %< % && ./%< <CR>
 map <F8> :w<CR> :!clear<CR> :!g++ -g % -o %:r && ./%:r<CR>
 map <F10> :!clear<CR> :!./%:r<CR>
 
@@ -85,7 +88,7 @@ set expandtab
 set guifont=Menlo\ Regular:h16
 set history=1000
 set ignorecase
-set scrolloff=10
+set scrolloff=15
 set incsearch
 set softtabstop=4
 set smartindent
@@ -94,7 +97,7 @@ set noerrorbells
 set noswapfile
 set number
 set relativenumber
-set pastetoggle=
+set pastetoggle=<F3>
 set shiftwidth=4
 set smarttab
 set tabstop=4
